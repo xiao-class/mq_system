@@ -59,6 +59,7 @@
             <artifactId>mqtt-system</artifactId>
         </dependency>
 
+        <!--knife4j-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
