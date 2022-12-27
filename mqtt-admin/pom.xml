@@ -67,6 +67,12 @@
             <artifactId>mqtt-sendaccept</artifactId>
         </dependency>
 
+        <!--rabbitMQ交换机数据管理模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>mqtt-manage</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

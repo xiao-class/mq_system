@@ -217,6 +217,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!--rabbitMQ交换机数据管理模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>mqtt-manage</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!--lombok-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -259,6 +266,7 @@
         <module>mqtt-generator</module>
         <module>mqtt-common</module>
         <module>mqtt-sendaccept</module>
+        <module>mqtt-manage</module>
     </modules>
     <packaging>pom</packaging>
 
