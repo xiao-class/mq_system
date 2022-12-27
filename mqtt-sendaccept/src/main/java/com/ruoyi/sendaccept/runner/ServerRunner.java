@@ -120,7 +120,7 @@ public class ServerRunner implements CommandLineRunner {
             try {
                 final Map<String, Socket> socketMap = socketConfig.getSocketMap();
                 final String ip = socket.getInetAddress().toString().substring(1);
-                final String port = new Integer(socket.getPort()).toString();
+                final String port = Integer.toString(socket.getPort());
                 socketMap.remove(ip + ":" + port);
                 socket.close();
             } catch (final IOException e) {

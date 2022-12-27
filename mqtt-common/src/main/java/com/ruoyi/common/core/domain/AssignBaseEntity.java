@@ -21,7 +21,7 @@ public class AssignBaseEntity implements Serializable {
     //解决swagger获取id精度缺失问题,postman不会有这个问题
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @ApiModelProperty(value = "主键id")
-    @TableId(value = "ID", type = IdType.ASSIGN_ID)
+    @TableId(value = "ID", type = IdType.AUTO)
     private Long id;
 
     @TableField(value = "CREATE_USER_ID", fill = FieldFill.INSERT)
