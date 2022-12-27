@@ -3,11 +3,10 @@ package com.ruoyi.common.enums;
 /**
  * 限流类型
  *
- * @author ruoyi
+ * @author Class
  */
 
-public enum LimitType
-{
+public enum LimitType {
     /**
      * 默认策略全局限流
      */

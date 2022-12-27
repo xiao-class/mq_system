@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created with IntelliJ IDEA.
  *
- * @Author: zk
+ * @Author: Class
  * @Date: 2022/12/27/9:47
  * @Description: 实体继承基类
  */

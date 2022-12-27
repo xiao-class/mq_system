@@ -2,11 +2,10 @@ package com.ruoyi.common.enums;
 
 /**
  * 操作人类别
- * 
- * @author ruoyi
+ *
+ * @author Class
  */
-public enum OperatorType
-{
+public enum OperatorType {
     /**
      * 其它
      */

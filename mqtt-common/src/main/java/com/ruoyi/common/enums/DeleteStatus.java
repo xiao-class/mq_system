@@ -3,7 +3,7 @@ package com.ruoyi.common.enums;
 /**
  * 基类字段 is_delete 状态
  *
- * @author zk
+ * @author Class
  */
 public enum DeleteStatus {
     VALID,
