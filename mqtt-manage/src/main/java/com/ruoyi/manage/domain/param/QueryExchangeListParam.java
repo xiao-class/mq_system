@@ -20,7 +20,7 @@ public class QueryExchangeListParam extends BaseParam<MqttExchangeEntity> {
     @Condition(field = "EXCHANGE_NAME", type = Operator.LIKE)
     private String exchangeName;
 
-    @ApiModelProperty(value = "是否停用：0-否、1-是")
-    @Condition(field = "STATE", type = Operator.EQ)
-    private Integer state;
+    @ApiModelProperty(value = "是否启用：1-是、0-否")
+    @Condition(field = "STATUS", type = Operator.EQ)
+    private Integer status;
 }

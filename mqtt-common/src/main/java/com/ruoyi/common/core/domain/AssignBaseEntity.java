@@ -3,18 +3,17 @@ package com.ruoyi.common.core.domain;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created with IntelliJ IDEA.
- *
  * @Author: Class
- * @Date: 2022/12/27/9:47
  * @Description: 实体继承基类
  */
+@Data
 public class AssignBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

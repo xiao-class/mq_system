@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @Author: Class
  */
@@ -21,16 +23,17 @@ import lombok.EqualsAndHashCode;
 public class MqttExchangeEntity extends AssignBaseEntity {
     @ApiModelProperty("交换机名称")
     @TableField("EXCHANGE_NAME")
+    @NotBlank(message = "交换机名称不能为空")
     private String exchangeName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @ApiModelProperty("资源目录id")
+    @ApiModelProperty(value = "所属部门id", readOnly = true)
     @TableField("DEPT_ID")
     private Long deptId;
 
-    @ApiModelProperty("是否停用 0否1是")
-    @TableField("STATE")
-    private String state;
+    @ApiModelProperty("是否启用：1-是、0-否")
+    @TableField("STATUS")
+    private Integer status;
 
     @ApiModelProperty("备注")
     @TableField("REMARK")
