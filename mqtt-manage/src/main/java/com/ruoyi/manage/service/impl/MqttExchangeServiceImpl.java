@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  * @Author: zk
  */
-@Service("mqttExchangeService")
+@Service
 public class MqttExchangeServiceImpl extends BaseServiceImpl<MqttExchangeMapper, MqttExchangeEntity>
         implements MqttExchangeService {
 }
