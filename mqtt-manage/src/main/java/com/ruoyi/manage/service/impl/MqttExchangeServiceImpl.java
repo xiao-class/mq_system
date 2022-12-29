@@ -2,6 +2,7 @@ package com.ruoyi.manage.service.impl;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.google.common.annotations.VisibleForTesting;
+import com.ruoyi.common.constant.ErrorCodeConstants;
 import com.ruoyi.common.constant.ExchangeConstants;
 import com.ruoyi.common.core.service.BaseServiceImpl;
 import com.ruoyi.common.exception.ServiceException;
@@ -45,11 +46,11 @@ public class MqttExchangeServiceImpl extends BaseServiceImpl<MqttExchangeMapper,
         }
         // 如果不存在id，则无需比较是否为同一id
         if (StringUtils.isNull(id)) {
-            throw new ServiceException("交换机名称已存在");
+            throw exception(ErrorCodeConstants.EXCHANGE_NAME_EXISTS);
         }
         // 比较id是否一样
         if (!info.getId().equals(id)) {
-            throw new ServiceException("交换机名称已存在");
+            throw exception(ErrorCodeConstants.EXCHANGE_NAME_EXISTS);
         }
     }
 
@@ -75,7 +76,7 @@ public class MqttExchangeServiceImpl extends BaseServiceImpl<MqttExchangeMapper,
         }
         // 判断结果
         if (ExchangeConstants.EXCHANGE_ENABLE == one.getStatus()) {
-            throw new ServiceException("交换机已启用");
+            throw exception(ErrorCodeConstants.EXCHANGE_NAME_ENABLE);
         }
     }
 }
