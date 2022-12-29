@@ -1,8 +1,10 @@
 package com.ruoyi.manage.api;
 
 import com.github.pagehelper.PageInfo;
+import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.manage.domain.entity.MqttExchangeEntity;
 import com.ruoyi.manage.domain.param.QueryExchangeListParam;
@@ -38,6 +40,7 @@ public class MqttExchangeController extends BaseController {
 
     @ApiOperation("添加交换机信息")
     @PostMapping("/add")
+    @Log(title = "部门管理", businessType = BusinessType.INSERT)
     public AjaxResult addExchange(@Validated @RequestBody MqttExchangeEntity mqttExchangeEntity) {
         // 判断交换机信息是否存在
         mqttExchangeService.checkExchangeNameUnique(mqttExchangeEntity.getId(), mqttExchangeEntity.getExchangeName());
@@ -51,6 +54,7 @@ public class MqttExchangeController extends BaseController {
 
     @ApiOperation("修改交换机信息")
     @PostMapping("/edit")
+    @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     public AjaxResult updateExchange(@Validated @RequestBody MqttExchangeEntity mqttExchangeEntity) {
         // 判断id是否携带
         if (StringUtils.isNull(mqttExchangeEntity.getId())) {
@@ -67,6 +71,7 @@ public class MqttExchangeController extends BaseController {
 
     @ApiOperation("根据id删除交换机信息")
     @DeleteMapping("/delete/{id}")
+    @Log(title = "部门管理", businessType = BusinessType.DELETE)
     public AjaxResult deleteExchange(@PathVariable Long id) {
         // 判断id是否存在
         if (StringUtils.isNull(id)) {
@@ -77,5 +82,15 @@ public class MqttExchangeController extends BaseController {
         // 进行删除
         boolean b = mqttExchangeService.removeById(id);
         return toAjax(b);
+    }
+
+    @ApiOperation("根据id获取详细交换机信息")
+    @GetMapping("/get/{id}")
+    public AjaxResult getExchangeById(@PathVariable Long id) {
+        // 判断id是否存在
+        if (StringUtils.isNull(id)) {
+            return null;
+        }
+        return success(mqttExchangeService.getById(id));
     }
 }
