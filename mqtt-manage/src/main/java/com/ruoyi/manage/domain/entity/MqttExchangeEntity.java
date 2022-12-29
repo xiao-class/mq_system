@@ -33,7 +33,7 @@ public class MqttExchangeEntity extends AssignBaseEntity {
 
     @ApiModelProperty("是否启用：1-是、0-否")
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @ApiModelProperty("备注")
     @TableField("REMARK")

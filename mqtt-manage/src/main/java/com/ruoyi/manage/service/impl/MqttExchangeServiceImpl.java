@@ -2,7 +2,6 @@ package com.ruoyi.manage.service.impl;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.google.common.annotations.VisibleForTesting;
-import com.ruoyi.common.constant.ErrorCodeConstants;
 import com.ruoyi.common.constant.ExchangeConstants;
 import com.ruoyi.common.core.service.BaseServiceImpl;
 import com.ruoyi.common.exception.ServiceException;
@@ -13,6 +12,9 @@ import com.ruoyi.manage.service.MqttExchangeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import static com.ruoyi.common.constant.ErrorCodeConstants.EXCHANGE_NAME_ENABLE;
+import static com.ruoyi.common.constant.ErrorCodeConstants.EXCHANGE_NAME_EXISTS;
 
 /**
  * @Author: Class
@@ -46,11 +48,11 @@ public class MqttExchangeServiceImpl extends BaseServiceImpl<MqttExchangeMapper,
         }
         // 如果不存在id，则无需比较是否为同一id
         if (StringUtils.isNull(id)) {
-            throw exception(ErrorCodeConstants.EXCHANGE_NAME_EXISTS);
+            throw exception(EXCHANGE_NAME_EXISTS);
         }
         // 比较id是否一样
         if (!info.getId().equals(id)) {
-            throw exception(ErrorCodeConstants.EXCHANGE_NAME_EXISTS);
+            throw exception(EXCHANGE_NAME_EXISTS);
         }
     }
 
@@ -75,8 +77,8 @@ public class MqttExchangeServiceImpl extends BaseServiceImpl<MqttExchangeMapper,
             return;
         }
         // 判断结果
-        if (ExchangeConstants.EXCHANGE_ENABLE == one.getStatus()) {
-            throw exception(ErrorCodeConstants.EXCHANGE_NAME_ENABLE);
+        if (ExchangeConstants.EXCHANGE_EQUIPMENT_ENABLE.equals(one.getStatus())) {
+            throw exception(EXCHANGE_NAME_ENABLE);
         }
     }
 }

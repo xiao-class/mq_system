@@ -12,4 +12,8 @@ public interface ErrorCodeConstants {
     // ========== 交换机（EXCHANGE） 模块 1002000000 ==========
     ErrorCode EXCHANGE_NAME_EXISTS = new ErrorCode(1002000000, "交换机名称已存在");
     ErrorCode EXCHANGE_NAME_ENABLE = new ErrorCode(1002000001, "交换机已被启用");
+
+    // ========== 设备模块 1002001000 ==========
+    ErrorCode EQUIPMENT_NO_EXISTS = new ErrorCode(1002001000, "设备名称已存在");
+    ErrorCode EQUIPMENT_NO_ENABLE = new ErrorCode(1002000001, "设备已被启用");
 }
