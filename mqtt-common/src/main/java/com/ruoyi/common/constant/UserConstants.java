@@ -114,10 +114,4 @@ public class UserConstants {
      */
     public static final long DEFAULT_USER_ID = 1L;
     public static final String DEFAULT_USER_NAME = "admin";
-
-    /**
-     * 交换机是否启用状态
-     */
-    public static final String EXCHANGE_ENABLE = "1";
-    public static final String EXCHANGE_NOT_ENABLE = "0";
 }

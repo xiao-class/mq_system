@@ -1,8 +1,10 @@
 package com.ruoyi.manage.service.impl;
 
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.ruoyi.common.constant.UserConstants;
+import com.google.common.annotations.VisibleForTesting;
+import com.ruoyi.common.constant.ExchangeConstants;
 import com.ruoyi.common.core.service.BaseServiceImpl;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.manage.domain.entity.MqttExchangeEntity;
 import com.ruoyi.manage.mapper.MqttExchangeMapper;
@@ -24,41 +26,56 @@ public class MqttExchangeServiceImpl extends BaseServiceImpl<MqttExchangeMapper,
     /**
      * 校验交换机名称是否唯一
      *
-     * @param mqttExchangeEntity 交换机信息
-     * @return 结果
+     * @param id           交换机id
+     * @param exchangeName 交换机名称
+     * @throws ServiceException 交换机名称已存在
      */
     @Override
-    public String checkExchangeNameUnique(MqttExchangeEntity mqttExchangeEntity) {
-        // 获取id，不存在则赋值为-1
-        Long id = StringUtils.isNull(mqttExchangeEntity.getId()) ? -1L : mqttExchangeEntity.getId();
+    @VisibleForTesting
+    public void checkExchangeNameUnique(Long id, String exchangeName) {
+        if (StringUtils.isEmpty(exchangeName)) {
+            return;
+        }
         // 根据交换机名称获取信息
         MqttExchangeEntity info = new LambdaQueryChainWrapper<>(mqttExchangeMapper)
-                .eq(MqttExchangeEntity::getExchangeName, mqttExchangeEntity.getExchangeName())
+                .eq(MqttExchangeEntity::getExchangeName, exchangeName)
                 .one();
-        // 进行判断
-        if (StringUtils.isNotNull(info) && info.getId().longValue() != id.longValue()) {
-            return UserConstants.NOT_UNIQUE;
+        if (StringUtils.isNull(info)) {
+            return;
         }
-        return UserConstants.UNIQUE;
+        // 如果不存在id，则无需比较是否为同一id
+        if (StringUtils.isNull(id)) {
+            throw new ServiceException("交换机名称已存在");
+        }
+        // 比较id是否一样
+        if (!info.getId().equals(id)) {
+            throw new ServiceException("交换机名称已存在");
+        }
     }
 
     /**
      * 判断该交换机是否启用
      *
      * @param id 交换机id
-     * @return {@link UserConstants#EXCHANGE_ENABLE}
+     * @throws ServiceException 交换机已启用
      */
     @Override
-    public String checkExchangeStatus(Long id) {
+    @VisibleForTesting
+    public void checkExchangeStatus(Long id) {
+        if (StringUtils.isNull(id)) {
+            return;
+        }
         // 根据id查找对应信息
         MqttExchangeEntity one = new LambdaQueryChainWrapper<>(mqttExchangeMapper)
                 .select(MqttExchangeEntity::getStatus)
-                .eq(MqttExchangeEntity::getId, StringUtils.isNull(id) ? -1L : id)
+                .eq(MqttExchangeEntity::getId, id)
                 .one();
-        // 判断结果
-        if (1 == one.getStatus()) {
-            return UserConstants.EXCHANGE_ENABLE;
+        if (StringUtils.isNull(one)) {
+            return;
         }
-        return UserConstants.EXCHANGE_NOT_ENABLE;
+        // 判断结果
+        if (ExchangeConstants.EXCHANGE_ENABLE == one.getStatus()) {
+            throw new ServiceException("交换机已启用");
+        }
     }
 }

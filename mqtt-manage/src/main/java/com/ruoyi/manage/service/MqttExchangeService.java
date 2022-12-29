@@ -10,16 +10,15 @@ public interface MqttExchangeService extends IService<MqttExchangeEntity> {
     /**
      * 校验交换机名称是否唯一
      *
-     * @param mqttExchangeEntity 交换机信息
-     * @return 结果
+     * @param id           交换机id
+     * @param exchangeName 交换机名称
      */
-    String checkExchangeNameUnique(MqttExchangeEntity mqttExchangeEntity);
+    void checkExchangeNameUnique(Long id, String exchangeName);
 
     /**
-     * 判断该交换机是否启用
+     * 根据交换机id判断该交换机是否启用
      *
      * @param id 交换机id
-     * @return link
      */
-    String checkExchangeStatus(Long id);
+    void checkExchangeStatus(Long id);
 }
