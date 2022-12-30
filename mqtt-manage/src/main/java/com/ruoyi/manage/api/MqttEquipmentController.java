@@ -12,10 +12,7 @@ import com.ruoyi.manage.service.MqttEquipmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -41,7 +38,7 @@ public class MqttEquipmentController extends BaseController {
         return success(PageInfo.of(list));
     }
 
-    @ApiOperation("")
+    @ApiOperation("添加设备信息")
     @PostMapping("/add")
     @Log(title = "设备管理", businessType = BusinessType.INSERT)
     public AjaxResult addEquipment(@Validated @RequestBody MqttEquipmentEntity mqttEquipmentEntity) {
@@ -68,6 +65,30 @@ public class MqttEquipmentController extends BaseController {
         mqttEquipmentService.checkEquipmentNoUnique(mqttEquipmentEntity.getId(), mqttEquipmentEntity.getEquipmentNo());
         // 进行修改
         boolean b = mqttEquipmentService.updateById(mqttEquipmentEntity);
+        return toAjax(b);
+    }
+
+    @ApiOperation("根据id获取详细设备信息")
+    @GetMapping("/get/{id}")
+    public AjaxResult getEquipmentById(@PathVariable Long id) {
+        // 判断id是否存在
+        if (StringUtils.isNull(id)) {
+            return null;
+        }
+        return success(mqttEquipmentService.getById(id));
+    }
+
+    @ApiOperation("根据id删除设备信息")
+    @DeleteMapping("/delete/{id}")
+    @Log(title = "设备管理", businessType = BusinessType.DELETE)
+    public AjaxResult deleteEquipment(@PathVariable Long id) {
+        if (StringUtils.isNull(id)) {
+            return null;
+        }
+        // 判断该设备是否启用
+        mqttEquipmentService.checkEquipmentStatus(id);
+        // 进行删除
+        boolean b = mqttEquipmentService.removeById(id);
         return toAjax(b);
     }
 }

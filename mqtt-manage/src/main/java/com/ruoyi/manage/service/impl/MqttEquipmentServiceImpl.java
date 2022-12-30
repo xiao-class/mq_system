@@ -45,11 +45,11 @@ public class MqttEquipmentServiceImpl extends BaseServiceImpl<MqttEquipmentMappe
         }
         // 如果id不存在说明该设备编号已存在
         if (StringUtils.isNull(id)) {
-            throw exception(EQUIPMENT_NO_EXISTS);
+            throw exception(EQUIPMENT_NO_EXISTS, equipmentNo);
         }
         // 如果id存在但是不相等
         if (!id.equals(one.getId())) {
-            throw exception(EQUIPMENT_NO_EXISTS);
+            throw exception(EQUIPMENT_NO_EXISTS, equipmentNo);
         }
     }
 
@@ -64,7 +64,7 @@ public class MqttEquipmentServiceImpl extends BaseServiceImpl<MqttEquipmentMappe
         if (StringUtils.isNull(id)) {
             return;
         }
-        // 根据编号查询信息
+        // 根据ID查询信息
         MqttEquipmentEntity one = new LambdaQueryChainWrapper<>(mqttEquipmentMapper)
                 .select(MqttEquipmentEntity::getEquipmentNo, MqttEquipmentEntity::getStatus)
                 .eq(MqttEquipmentEntity::getId, id)
