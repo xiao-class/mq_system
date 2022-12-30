@@ -15,4 +15,6 @@ public interface MqttEquipmentExchangeService extends IService<MqttEquipmentExch
      * @param deptId      操作人部门
      */
     void checkEquipmentNoBinDing(Long id, String equipmentNo, Long deptId);
+    
+
 }

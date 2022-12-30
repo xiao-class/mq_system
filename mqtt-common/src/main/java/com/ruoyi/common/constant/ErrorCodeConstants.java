@@ -15,5 +15,7 @@ public interface ErrorCodeConstants {
 
     // ========== 设备模块 1002001000 ==========
     ErrorCode EQUIPMENT_NO_EXISTS = new ErrorCode(1002001000, "设备名称已存在");
-    ErrorCode EQUIPMENT_NO_ENABLE = new ErrorCode(1002000001, "设备已被启用");
+    ErrorCode EQUIPMENT_NO_ENABLE = new ErrorCode(1002001001, "设备已被启用");
+    ErrorCode EQUIPMENT_BINDING_EXCHANGE = new ErrorCode(1002001002, "该设备已被绑定");
+    ErrorCode NOT_EXCHANGE_ROLE = new ErrorCode(1002001003, "交换机不存在或无权限绑定");
 }
