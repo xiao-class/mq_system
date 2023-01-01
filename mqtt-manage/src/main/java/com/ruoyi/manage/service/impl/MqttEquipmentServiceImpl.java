@@ -45,11 +45,11 @@ public class MqttEquipmentServiceImpl extends BaseServiceImpl<MqttEquipmentMappe
         }
         // 如果id不存在说明该设备编号已存在
         if (StringUtils.isNull(id)) {
-            throw exception(EQUIPMENT_NO_EXISTS, equipmentNo);
+            throw exception(EQUIPMENT_NO_EXISTS);
         }
         // 如果id存在但是不相等
         if (!id.equals(one.getId())) {
-            throw exception(EQUIPMENT_NO_EXISTS, equipmentNo);
+            throw exception(EQUIPMENT_NO_EXISTS);
         }
     }
 

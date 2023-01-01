@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.DataModel;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.manage.domain.entity.MqttExchangeEntity;
@@ -29,18 +30,18 @@ public class MqttExchangeController extends BaseController {
 
     @ApiOperation("获取交换机数据列表")
     @PostMapping("/list")
-    public AjaxResult queryExchangeList(@RequestBody(required = false) QueryExchangeListParam param) {
+    public DataModel<PageInfo<MqttExchangeEntity>> queryExchangeList(@RequestBody(required = false) QueryExchangeListParam param) {
         startPage();
         List<MqttExchangeEntity> list = mqttExchangeService.list(param.wrapper()
-                .select("ID", "EXCHANGE_NAME", "STATUS", "CREATE_TIME")
+                .select("ID", "EXCHANGE_NAME", "STATUS", "CREATE_TIME", "CREATE_USER_NAME")
                 .eq("DEPT_ID", getDeptId())
                 .orderByDesc("CREATE_TIME"));
-        return AjaxResult.success(PageInfo.of(list));
+        return DataModel.success(PageInfo.of(list));
     }
 
     @ApiOperation("添加交换机信息")
     @PostMapping("/add")
-    @Log(title = "部门管理", businessType = BusinessType.INSERT)
+    @Log(title = "交换机管理", businessType = BusinessType.INSERT)
     public AjaxResult addExchange(@Validated @RequestBody MqttExchangeEntity mqttExchangeEntity) {
         // 判断交换机信息是否存在
         mqttExchangeService.checkExchangeNameUnique(mqttExchangeEntity.getId(), mqttExchangeEntity.getExchangeName());
@@ -54,14 +55,12 @@ public class MqttExchangeController extends BaseController {
 
     @ApiOperation("修改交换机信息")
     @PostMapping("/edit")
-    @Log(title = "部门管理", businessType = BusinessType.UPDATE)
+    @Log(title = "交换机管理", businessType = BusinessType.UPDATE)
     public AjaxResult updateExchange(@Validated @RequestBody MqttExchangeEntity mqttExchangeEntity) {
         // 判断id是否携带
         if (StringUtils.isNull(mqttExchangeEntity.getId())) {
             return null;
         }
-        // 判断该交换机是否已经启用
-        mqttExchangeService.checkExchangeStatus(mqttExchangeEntity.getId());
         // 判断该交换机名称是否已经被占用
         mqttExchangeService.checkExchangeNameUnique(mqttExchangeEntity.getId(), mqttExchangeEntity.getExchangeName());
         // 进行修改
@@ -71,7 +70,7 @@ public class MqttExchangeController extends BaseController {
 
     @ApiOperation("根据id删除交换机信息")
     @DeleteMapping("/delete/{id}")
-    @Log(title = "部门管理", businessType = BusinessType.DELETE)
+    @Log(title = "交换机管理", businessType = BusinessType.DELETE)
     public AjaxResult deleteExchange(@PathVariable Long id) {
         // 判断id是否存在
         if (StringUtils.isNull(id)) {
@@ -86,11 +85,26 @@ public class MqttExchangeController extends BaseController {
 
     @ApiOperation("根据id获取详细交换机信息")
     @GetMapping("/get/{id}")
-    public AjaxResult getExchangeById(@PathVariable Long id) {
+    public DataModel<MqttExchangeEntity> getExchangeById(@PathVariable Long id) {
         // 判断id是否存在
         if (StringUtils.isNull(id)) {
             return null;
         }
-        return success(mqttExchangeService.getById(id));
+        return DataModel.success(mqttExchangeService.getById(id));
+    }
+
+    @ApiOperation("修改交换机的状态")
+    @PostMapping("/edit/status")
+    @Log(title = "交换机管理", businessType = BusinessType.UPDATE)
+    public AjaxResult editExchangeStatus(Long id, String status) {
+        // 判断修改的id及状态是否存在
+        if (StringUtils.isNull(id)) {
+            return null;
+        }
+        if (StringUtils.isEmpty(status)) {
+            return null;
+        }
+        MqttExchangeEntity mqttExchangeEntity = (MqttExchangeEntity) new MqttExchangeEntity().setStatus(status).setId(id);
+        return toAjax(mqttExchangeService.updateById(mqttExchangeEntity));
     }
 }

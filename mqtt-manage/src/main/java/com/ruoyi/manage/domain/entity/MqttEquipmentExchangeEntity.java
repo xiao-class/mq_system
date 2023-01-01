@@ -17,6 +17,7 @@ import lombok.EqualsAndHashCode;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value = "设备", description = "设备信息实体")
 @TableName("MQTT_EQUIPMENT_EXCHANGE")
+
 public class MqttEquipmentExchangeEntity extends AssignBaseEntity {
     @ApiModelProperty("交换机ID")
     @TableField("EXCHANGE_ID")

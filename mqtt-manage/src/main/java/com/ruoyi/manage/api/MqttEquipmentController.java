@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.DataModel;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.manage.domain.entity.MqttEquipmentEntity;
@@ -29,13 +30,13 @@ public class MqttEquipmentController extends BaseController {
 
     @ApiOperation("获取设备列表")
     @PostMapping("/list")
-    public AjaxResult queryEquipmentList(@RequestBody(required = false) QueryEquipmentListParam param) {
+    public DataModel<PageInfo<MqttEquipmentEntity>> queryEquipmentList(@RequestBody(required = false) QueryEquipmentListParam param) {
         startPage();
         List<MqttEquipmentEntity> list = mqttEquipmentService.list(param.wrapper()
                 .select("ID", "EQUIPMENT_NO", "EQUIPMENT_TYPE", "STATUS", "ONLINE_STATUS")
                 .eq("DEPT_ID", getDeptId())
                 .orderByDesc("CREATE_TIME"));
-        return success(PageInfo.of(list));
+        return DataModel.success(PageInfo.of(list));
     }
 
     @ApiOperation("添加设备信息")
@@ -70,12 +71,12 @@ public class MqttEquipmentController extends BaseController {
 
     @ApiOperation("根据id获取详细设备信息")
     @GetMapping("/get/{id}")
-    public AjaxResult getEquipmentById(@PathVariable Long id) {
+    public DataModel<MqttEquipmentEntity> getEquipmentById(@PathVariable Long id) {
         // 判断id是否存在
         if (StringUtils.isNull(id)) {
             return null;
         }
-        return success(mqttEquipmentService.getById(id));
+        return DataModel.success(mqttEquipmentService.getById(id));
     }
 
     @ApiOperation("根据id删除设备信息")

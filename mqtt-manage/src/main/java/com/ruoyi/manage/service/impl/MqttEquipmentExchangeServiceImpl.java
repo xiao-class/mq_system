@@ -49,7 +49,7 @@ public class MqttEquipmentExchangeServiceImpl extends BaseServiceImpl<MqttEquipm
                 .one();
         // 说明已被绑定
         if (StringUtils.isNotNull(one)) {
-            throw exception(EQUIPMENT_BINDING_EXCHANGE, equipmentNo);
+            throw exception(EQUIPMENT_BINDING_EXCHANGE);
         }
         // 如果不存在就判断操作人是否与设备、交换机是否为同一部门
         MqttEquipmentEntity equipmentEntity = new LambdaQueryChainWrapper<>(mqttEquipmentMapper)
@@ -59,7 +59,7 @@ public class MqttEquipmentExchangeServiceImpl extends BaseServiceImpl<MqttEquipm
                 .eq(MqttExchangeEntity::getId, id)
                 .one();
         if (!deptId.equals(equipmentEntity.getDeptId()) || !deptId.equals(exchangeEntity.getDeptId())) {
-            throw exception(NOT_EXCHANGE_ROLE, exchangeEntity.getExchangeName());
+            throw exception(NOT_EXCHANGE_ROLE);
         }
     }
 }

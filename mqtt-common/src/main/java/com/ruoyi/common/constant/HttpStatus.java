@@ -90,4 +90,9 @@ public class HttpStatus {
      * 系统警告消息
      */
     public static final int WARN = 601;
+
+    /**
+     * 存在敏感词
+     */
+    public static final int EXIST_SENSITIVE = 700;
 }

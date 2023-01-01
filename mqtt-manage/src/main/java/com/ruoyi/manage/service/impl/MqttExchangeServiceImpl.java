@@ -48,11 +48,11 @@ public class MqttExchangeServiceImpl extends BaseServiceImpl<MqttExchangeMapper,
         }
         // 如果不存在id，则无需比较是否为同一id
         if (StringUtils.isNull(id)) {
-            throw exception(EXCHANGE_NAME_EXISTS, exchangeName);
+            throw exception(EXCHANGE_NAME_EXISTS);
         }
         // 比较id是否一样
         if (!info.getId().equals(id)) {
-            throw exception(EXCHANGE_NAME_EXISTS, exchangeName);
+            throw exception(EXCHANGE_NAME_EXISTS);
         }
     }
 
