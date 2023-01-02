@@ -7,8 +7,14 @@ package com.ruoyi.common.constant;
  */
 public class ExchangeConstants {
     /**
-     * 交换机是否启用状态
+     * 交换机或设备是否启用状态
      */
     public static final String EXCHANGE_EQUIPMENT_ENABLE = "1";
     public static final String EXCHANGE_NOT_ENABLE = "0";
+
+    /**
+     * 设备是否被绑定
+     */
+    public static final String EXCHANGE_EQUIPMENT_BINDING = "1";
+    public static final String EXCHANGE_NOT_BINDING = "0";
 }

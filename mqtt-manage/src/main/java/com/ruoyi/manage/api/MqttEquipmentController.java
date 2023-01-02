@@ -1,5 +1,6 @@
 package com.ruoyi.manage.api;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.ruoyi.common.constant.ExchangeConstants.EXCHANGE_EQUIPMENT_BINDING;
+
 /**
  * @Author: Class
  */
@@ -31,11 +34,20 @@ public class MqttEquipmentController extends BaseController {
     @ApiOperation("获取设备列表")
     @PostMapping("/list")
     public DataModel<PageInfo<MqttEquipmentEntity>> queryEquipmentList(@RequestBody(required = false) QueryEquipmentListParam param) {
-        startPage();
-        List<MqttEquipmentEntity> list = mqttEquipmentService.list(param.wrapper()
-                .select("ID", "EQUIPMENT_NO", "EQUIPMENT_TYPE", "STATUS", "ONLINE_STATUS")
+        // 进行构建查找条件wrapper
+        QueryWrapper<MqttEquipmentEntity> mqttEquipmentEntityQueryWrapper = param.wrapper()
+                .select("ID", "EQUIPMENT_NO", "EQUIPMENT_TYPE", "STATUS", "ONLINE_STATUS", "CREATE_TIME", "CREATE_USER_NAME")
                 .eq("DEPT_ID", getDeptId())
-                .orderByDesc("CREATE_TIME"));
+                .orderByDesc("CREATE_TIME");
+        if (EXCHANGE_EQUIPMENT_BINDING.equals(param.getBindingStatus())) {
+            // 查找已经被绑定的设备
+            mqttEquipmentEntityQueryWrapper.isNotNull("EXCHANGE_ID");
+        } else {
+            // 查询未绑定的设备
+            mqttEquipmentEntityQueryWrapper.isNull("EXCHANGE_ID");
+        }
+        startPage();
+        List<MqttEquipmentEntity> list = mqttEquipmentService.list(mqttEquipmentEntityQueryWrapper);
         return DataModel.success(PageInfo.of(list));
     }
 

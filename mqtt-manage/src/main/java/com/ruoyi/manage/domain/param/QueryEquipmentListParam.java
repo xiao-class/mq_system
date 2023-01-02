@@ -31,4 +31,8 @@ public class QueryEquipmentListParam extends BaseParam<MqttEquipmentEntity> {
     @ApiModelProperty(value = "设备是否在线 关联字典表：mqtt_equipment_online")
     @Condition(field = "ONLINE_STATUS", type = Operator.EQ)
     private String onlineStatus;
+
+    @ApiModelProperty(value = "是否绑定了交换机")
+    @Condition(isField = false)
+    private String bindingStatus;
 }

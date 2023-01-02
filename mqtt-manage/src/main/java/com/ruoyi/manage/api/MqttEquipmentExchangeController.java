@@ -1,20 +1,21 @@
 package com.ruoyi.manage.api;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.DataModel;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.manage.domain.entity.MqttEquipmentExchangeEntity;
+import com.ruoyi.manage.domain.entity.MqttExchangeEntity;
 import com.ruoyi.manage.domain.param.EquipmentBindingExchangeParam;
 import com.ruoyi.manage.service.MqttEquipmentExchangeService;
+import com.ruoyi.manage.service.MqttExchangeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ import java.util.List;
 public class MqttEquipmentExchangeController extends BaseController {
     @Resource
     private MqttEquipmentExchangeService mqttEquipmentExchangeService;
+    @Resource
+    private MqttExchangeService mqttExchangeService;
 
     @PostMapping("/list")
     @ApiOperation("进行批量设备与交换机进行绑定")
@@ -49,5 +52,15 @@ public class MqttEquipmentExchangeController extends BaseController {
         // 进行插入
         boolean b = mqttEquipmentExchangeService.saveBatch(equipmentExchangeEntityList);
         return toAjax(b);
+    }
+
+    @ApiOperation("获取交换机下拉框")
+    @GetMapping("/exchange")
+    public DataModel<List<MqttExchangeEntity>> queryExchangeSelect() {
+        List<MqttExchangeEntity> list = mqttExchangeService.list(new QueryWrapper<>(new MqttExchangeEntity())
+                .select("EXCHANGE_NAME", "ID")
+                .eq("DEPT_ID", getDeptId())
+                .orderByDesc("CREATE_TIME"));
+        return DataModel.success(list);
     }
 }

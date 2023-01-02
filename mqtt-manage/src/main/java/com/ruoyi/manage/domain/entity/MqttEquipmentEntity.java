@@ -49,6 +49,10 @@ public class MqttEquipmentEntity extends AssignBaseEntity {
     @TableField("ONLINE_STATUS")
     private String onlineStatus;
 
+    @ApiModelProperty(value = "进行绑定的交换机id")
+    @TableField("EXCHANGE_ID")
+    private Long exchangeId;
+
     @ApiModelProperty("备注")
     @TableField("REMARK")
     private String remark;
