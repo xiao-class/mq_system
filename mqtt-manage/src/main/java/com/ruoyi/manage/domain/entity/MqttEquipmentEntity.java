@@ -2,6 +2,7 @@ package com.ruoyi.manage.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ruoyi.common.core.domain.AssignBaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -39,6 +40,7 @@ public class MqttEquipmentEntity extends AssignBaseEntity {
 
     @ApiModelProperty(value = "所属部门", readOnly = true)
     @TableField("DEPT_ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long deptId;
 
     @ApiModelProperty(value = "设备是否启用 关联字典表：mqtt_equipment_status")
@@ -51,6 +53,7 @@ public class MqttEquipmentEntity extends AssignBaseEntity {
 
     @ApiModelProperty(value = "进行绑定的交换机id")
     @TableField("EXCHANGE_ID")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long exchangeId;
 
     @ApiModelProperty("备注")

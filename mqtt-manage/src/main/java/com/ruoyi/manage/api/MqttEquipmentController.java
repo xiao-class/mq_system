@@ -72,8 +72,6 @@ public class MqttEquipmentController extends BaseController {
         if (StringUtils.isNull(mqttEquipmentEntity.getId())) {
             return null;
         }
-        // 判断该设备是否启用
-        mqttEquipmentService.checkEquipmentStatus(mqttEquipmentEntity.getId());
         // 判断设备编号是否存在
         mqttEquipmentService.checkEquipmentNoUnique(mqttEquipmentEntity.getId(), mqttEquipmentEntity.getEquipmentNo());
         // 进行修改
@@ -103,5 +101,18 @@ public class MqttEquipmentController extends BaseController {
         // 进行删除
         boolean b = mqttEquipmentService.removeById(id);
         return toAjax(b);
+    }
+
+    @ApiOperation("修改设备状态")
+    @PostMapping("/update/status")
+    @Log(title = "设备管理", businessType = BusinessType.UPDATE)
+    public AjaxResult updateEquipmentStatus(Long id, String status) {
+        // 判断主要参数是否为空
+        if (StringUtils.isNull(id) || StringUtils.isEmpty(status)) {
+            return null;
+        }
+        // 改造对象进行修改
+        MqttEquipmentEntity mqttEquipmentEntity = (MqttEquipmentEntity) new MqttEquipmentEntity().setStatus(status).setId(id);
+        return toAjax(mqttEquipmentService.updateById(mqttEquipmentEntity));
     }
 }
