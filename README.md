@@ -1,8 +1,9 @@
 ## 平台简介
 
 * 前端采用Vue、Element UI。
-* 后端采用Spring Boot、Spring Security、Redis、RabbitMQ & Jwt。
+* 后端采用Spring Boot、Spring Security、Redis、RabbitMQ & Jwt & Mybatis-plus。
 * 权限认证使用Jwt，支持多终端认证系统。
+* 通过socket进行连接设备，接受与下发设备数据。
 * 支持加载动态权限菜单，多方式轻松权限控制。
 * 高效率开发，使用代码生成器可以一键生成前后端代码。
 * 前端地址：[mqtt_web](https://gitee.com/class-java/mq_web)
@@ -28,6 +29,7 @@
 16. 缓存监控：对系统的缓存信息查询，命令统计等。
 17. 在线构建器：拖动表单元素生成相应的HTML代码。
 18. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+20. 交换机管理：进行对数据主题的创建及分类
 
 ## 在线体验
 
@@ -37,5 +39,5 @@
 
 </table>
 
-##   
+##    
 
