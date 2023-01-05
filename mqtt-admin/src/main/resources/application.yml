@@ -21,7 +21,7 @@ server:
   port: 25672
   # socket开放端口
   mqserver:
-    port: 8888
+    port: 8567
   servlet:
     # 应用的访问路径
     context-path: /
